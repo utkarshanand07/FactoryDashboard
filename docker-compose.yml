@@ -8,10 +8,8 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      # Mount backend code for live reloading
       - ./backend/app:/app/app
 
-      # FIX: Mount the 'frontend' folder directly (removed /public)
       - ./frontend:/app/frontend
 
     environment:

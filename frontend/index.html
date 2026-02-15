@@ -13,12 +13,15 @@
 <body class="bg-gray-50 text-gray-800">
     <div id="app" class="max-w-6xl mx-auto p-6">
         <header class="flex justify-between items-center mb-8">
-            <h1 class="text-3xl font-bold text-blue-800">🏭 Factory<span class="text-blue-500">Sight</span></h1>
-            <div class="text-sm">
-                Status:
-                <span v-if="error" class="text-red-600 font-bold">{{ error }}</span>
-                <span v-else class="text-green-600 font-bold">Live Updates On</span>
+            <div>
+                <h1 class="text-3xl font-bold text-blue-800"> Factory<span class="text-blue-500">Dashboard</span></h1>
+                <div class="text-sm text-gray-500">Real-time DB Connection: <span class="text-green-600 font-bold">Active</span></div>
             </div>
+
+            <button onclick="app.simulateWork()"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow transition">
+                Simulate Activity
+            </button>
         </header>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
