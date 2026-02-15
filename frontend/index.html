@@ -4,24 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Factory Dashboard</title>
+
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-gray-50 text-gray-800">
     <div id="app" class="max-w-6xl mx-auto p-6">
         <header class="flex justify-between items-center mb-8">
             <h1 class="text-3xl font-bold text-blue-800">🏭 Factory<span class="text-blue-500">Sight</span></h1>
-            <div class="text-sm text-gray-500">System Status: <span class="text-green-600 font-bold">Online</span></div>
+            <div class="text-sm">
+                Status:
+                <span v-if="error" class="text-red-600 font-bold">{{ error }}</span>
+                <span v-else class="text-green-600 font-bold">Live Updates On</span>
+            </div>
         </header>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div class="bg-white p-6 rounded shadow border-l-4 border-blue-500">
                 <div class="text-gray-500">Total Production</div>
-                <div class="text-4xl font-bold">{{ factory.total_production || 0 }} <span class="text-sm">units</span></div>
+                <div class="text-4xl font-bold">{{ factory.total_production }} <span class="text-sm">units</span></div>
             </div>
             <div class="bg-white p-6 rounded shadow border-l-4 border-green-500">
                 <div class="text-gray-500">Global Utilization</div>
-                <div class="text-4xl font-bold">{{ factory.global_utilization || 0 }}%</div>
+                <div class="text-4xl font-bold">{{ factory.global_utilization }}%</div>
             </div>
         </div>
 
@@ -34,42 +41,15 @@
                 </div>
                 <div class="mt-2 text-sm">Produced: {{ w.produced }}</div>
                 <div class="mt-1 text-sm">Util: {{ w.utilization }}%</div>
+
                 <div class="w-full bg-gray-200 h-2 rounded mt-2">
-                    <div class="bg-blue-600 h-2 rounded" :style="{width: w.utilization + '%'}"></div>
+                    <div class="bg-blue-600 h-2 rounded progress-bar"
+                         :style="{width: w.utilization + '%'}"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        const { createApp } = Vue;
-
-        // IMPORTANT: WE WILL CHANGE THIS URL AFTER DEPLOYING BACKEND
-        const API_URL = 'http://127.0.0.1:8000/api';
-
-        createApp({
-            data() {
-                return {
-                    factory: {},
-                    workers: []
-                }
-            },
-            mounted() {
-                this.fetchData();
-            },
-            methods: {
-                async fetchData() {
-                    try {
-                        const fRes = await fetch(`${API_URL}/metrics/factory`);
-                        const wRes = await fetch(`${API_URL}/metrics/workers`);
-                        this.factory = await fRes.json();
-                        this.workers = await wRes.json();
-                    } catch (e) {
-                        console.error("Connection Error:", e);
-                    }
-                }
-            }
-        }).mount('#app')
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>

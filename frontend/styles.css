@@ -1,0 +1,14 @@
+/* Smoothly animate the progress bars */
+.progress-bar {
+    transition: width 0.5s ease-in-out;
+}
+
+/* Fade in effect for the whole app */
+body {
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
